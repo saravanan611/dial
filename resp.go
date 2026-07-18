@@ -6,12 +6,34 @@ import (
 	"net/http"
 
 	"github.com/saravanan611/log"
-	"github.com/saravanan611/proto"
 )
 
 type Resp struct {
 	http.ResponseWriter
 	respType string
+	body     []byte
+	status   int
+}
+
+func (pResp *Resp) WriteHeader(pStatus int) {
+	pResp.status = pStatus
+	pResp.ResponseWriter.WriteHeader(pStatus)
+}
+
+func (pResp *Resp) Write(pBody []byte) (int, error) {
+	pResp.body = pBody
+	return pResp.ResponseWriter.Write(pBody)
+}
+
+func (pResp *Resp) Status() int {
+	if pResp.status == 0 {
+		return http.StatusOK
+	}
+	return pResp.status
+}
+
+func (pResp *Resp) Body() []byte {
+	return pResp.body
 }
 
 type respStruct[T any] struct {
@@ -34,11 +56,11 @@ func (pResp *Resp) SendError(pCode string, pErr error) {
 	lResp.ErrCode = pCode
 	lResp.ErrMsg = pErr.Error()
 
-	if pResp.respType == "application/json" {
-		lRespByte, lErr = json.Marshal(lResp)
-	} else {
-		lRespByte, lErr = proto.Marshal(lResp, "json")
-	}
+	// if pResp.respType == "application/json" {
+	lRespByte, lErr = json.Marshal(lResp)
+	// } else {
+	// 	lRespByte, lErr = proto.Marshal(lResp, "json")
+	// }
 
 	if lErr != nil {
 		pResp.WriteHeader(http.StatusInternalServerError)
@@ -51,6 +73,11 @@ func (pResp *Resp) SendError(pCode string, pErr error) {
 	log.Info("SendError (-)")
 }
 
+func (pResp *Resp) SendByte(pData []byte) {
+	pResp.WriteHeader(http.StatusOK)
+	pResp.Write(pData)
+}
+
 func Send[pType any](pResp *Resp, pData pType) {
 	var lRespByte []byte
 
@@ -60,11 +87,11 @@ func Send[pType any](pResp *Resp, pData pType) {
 	lResp.Status = errCode
 	lResp.Info = pData
 
-	if pResp.respType == "json" {
-		lRespByte, lErr = json.Marshal(lResp)
-	} else {
-		lRespByte, lErr = proto.Marshal(lResp, "json")
-	}
+	// if pResp.respType == "json" {
+	lRespByte, lErr = json.Marshal(lResp)
+	// } else {
+	// 	lRespByte, lErr = proto.Marshal(lResp, "json")
+	// }
 
 	if lErr != nil {
 		pResp.WriteHeader(http.StatusInternalServerError)

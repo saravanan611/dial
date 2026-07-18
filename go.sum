@@ -4,5 +4,3 @@ github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
 github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
 github.com/saravanan611/log v0.0.0-20260324180546-0c8a7cb34d2c h1:jGEuEZx8Wf+7StofVu9ckTP+N7z44F/ky9cXDyz6nXE=
 github.com/saravanan611/log v0.0.0-20260324180546-0c8a7cb34d2c/go.mod h1:uT2ctPWDdq35XWb4iqHNMvaUV32eba+vyN8BT4qHpbM=
-github.com/saravanan611/proto v0.0.0-20260411165614-a2d889fec1e2 h1:Tp9ecUHco9pJO2fP+hx7pWJgrS5VHpodCdm3CWgKm4k=
-github.com/saravanan611/proto v0.0.0-20260411165614-a2d889fec1e2/go.mod h1:xgpb5luOxvE/38Q4lnvC1LwV8lGG0l/MZjXro1yn4JM=
